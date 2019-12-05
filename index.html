@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Dasar Ajax</title>
+    </head>
+    <body>
+        <h1>Kirim data dengan ajax</h1>
+        <form action="" method="post">
+            <label for="title">Title</label>
+            <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Isi judul artikel"
+            />
+            <br />
+            <label for="isi">Isi Artikel</label>
+            <textarea name="isi" id="isi" cols="50" rows="10"></textarea>
+            <br />
+            <input type="submit" value="Kirim" />
+        </form>
+
+        <script>
+            const xhr = new XMLHttpRequest();
+            const url = "https://jsonplaceholder.typicode.com/posts";
+            const form = document.querySelector("form");
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                const input = this.getElementsByTagName("input");
+                const textarea = this.getElementsByTagName("textarea");
+                let data = JSON.stringify({
+                    title: input[0].value,
+                    body: textarea[0].value,
+                    userId: 17
+                });
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader(
+                    "Content-Type",
+                    "application/json;charset=UTF-8"
+                );
+                xhr.onload = function() {
+                    console.log(this.responseText);
+                };
+                xhr.send(data);
+            });
+        </script>
+    </body>
+</html>
